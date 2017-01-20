@@ -46,9 +46,8 @@ public class SpawningScript : MonoBehaviour {
     {
         mainIslandPosition = this.transform.position;
         Vector2 angle = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        angle.Normalize();
-        Debug.Log(angle);
-        newIslandPosition = new Vector3(this.GetComponent<SpriteRenderer>().bounds.size.x * angle.x, this.GetComponent<SpriteRenderer>().bounds.size.y * angle.y, 0);
+        angle.Normalize();      
+        newIslandPosition = new Vector3((this.GetComponent<SpriteRenderer>().bounds.size.x/2) * angle.x, (this.GetComponent<SpriteRenderer>().bounds.size.y/2) * angle.y, 0);
         return newIslandPosition;
     }
     public void addIsland()
