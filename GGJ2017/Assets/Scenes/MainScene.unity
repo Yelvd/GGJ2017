@@ -165,13 +165,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 252233129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94bd2837cbd48be4cbd19cfaa11cd8ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ace8c66156bd414cb879e2fdce9c82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islandPrefab: {fileID: 1254804623137898, guid: 189a7b971ad253d40bfc204d3e5ad603,
-    type: 2}
-  islandCounter: 0
-  maxIslands: 20
+  wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
+  waveSpeed: 3
+  timeLeft: 0
 --- !u!114 &252233133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,12 +179,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 252233129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db88f800cbb7ee4997a8fdd35346b6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f998ecc57a80545b15d1439c1bb95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
-  waveSpeed: 3
-  timeLeft: 0
+  islandPrefab: {fileID: 1254804623137898, guid: 7011b260df8b220498031d60e927e617,
+    type: 2}
+  islandCounter: 0
+  maxIslands: 0
 --- !u!1 &790411973
 GameObject:
   m_ObjectHideFlags: 0
