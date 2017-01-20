@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 252233130}
   - component: {fileID: 252233131}
   - component: {fileID: 252233132}
+  - component: {fileID: 252233133}
   m_Layer: 2
   m_Name: MiddleIsland
   m_TagString: Untagged
@@ -116,10 +117,10 @@ Transform:
   m_GameObject: {fileID: 252233129}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0625, y: 0.0625, z: 1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 790411976}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &252233131
 SpriteRenderer:
@@ -171,6 +172,20 @@ MonoBehaviour:
     type: 2}
   islandCounter: 0
   maxIslands: 20
+--- !u!114 &252233133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 252233129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db88f800cbb7ee4997a8fdd35346b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
+  waveSpeed: 3
+  timeLeft: 0
 --- !u!1 &790411973
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +261,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 252233130}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
