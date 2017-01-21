@@ -29,6 +29,8 @@ public class IslandBehavior : MonoBehaviour {
     }
     public void DestroyIsland()
     {
+        if (getStatus() == 1)
+            GameObject.Find("Player").GetComponent<PlayerController>().ResetPlayer();
         Destroy(this.gameObject);
 
     }
@@ -48,5 +50,5 @@ public class IslandBehavior : MonoBehaviour {
     }
 
     public void setStatus(int i) { status = i; }
-    public int getSatus() { return status; }
+    public int getStatus() { return status; }
 }
