@@ -10,8 +10,10 @@ public class WaveBehaviour : MonoBehaviour {
     private float maxSize;
     private float startWavePower;
     private float endWavePower;
+    private bool hitFirst;
 
-	void Start () {
+
+    void Start () {
         this.transform.localScale = Vector3.zero;
     }
 	
@@ -49,18 +51,25 @@ public class WaveBehaviour : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (hitFirst)
+        {
+            hitFirst = false;
+            return;
+        }
         if (other.gameObject.tag == "Island")
         {
             other.gameObject.GetComponent<IslandBehavior>().MoveIsland(getWavePower(other.gameObject));
         }
     }
-    public void setupWave(Vector3 pos, float startPower, float endPower, float scale, float sp = 0.01f)
+
+    public void setupWave(Vector3 pos, float startPower, float endPower, float scale, bool hitFirst = false, float sp = 0.01f)
     {
         this.transform.position = pos;
         startWavePower = startPower;
         endWavePower = endPower;
         maxScale = scale;
         speed = sp;
+        this.hitFirst = hitFirst;
         maxSize = GameObject.Find("PlayingField").GetComponent<SpriteRenderer>().bounds.size.x * maxScale;
     }
     

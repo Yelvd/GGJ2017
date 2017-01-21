@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114213061760718504}
   - component: {fileID: 60112839386389984}
   m_Layer: 0
-  m_Name: MiddleIslandWave
+  m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,8 +343,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.01
   maxScale: 1
-  wavePower: 100
-  islands: []
 --- !u!212 &212411076490846228
 SpriteRenderer:
   m_ObjectHideFlags: 1
