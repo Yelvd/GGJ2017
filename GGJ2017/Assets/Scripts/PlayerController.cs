@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour {
         if (len <= jumpDist)
         {
             drawLine(ray, len);
-            if (Input.GetButtonDown(playerID.ToString() + ":Fire1"))
+            if (Input.GetButtonDown(playerID.ToString() + ":Fire1") && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() == 1 && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() == 2)
             {
                 switchToIsland(hit.collider.gameObject);
             }
