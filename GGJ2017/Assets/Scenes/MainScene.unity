@@ -135,7 +135,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f379580ab5acc9f438655e69d9f11d29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,6 +173,10 @@ MonoBehaviour:
   timeLeft: 0
   maxWavePower: 60
   minWavePower: 20
+  materials:
+  - {fileID: 2100000, guid: f379580ab5acc9f438655e69d9f11d29, type: 2}
+  - {fileID: 2100000, guid: c00655a92f9013c4b8321d91befa7c24, type: 2}
+  - {fileID: 2100000, guid: fd29c391e3ebf4e4a93bc943657dd299, type: 2}
 --- !u!114 &252233133
 MonoBehaviour:
   m_ObjectHideFlags: 0

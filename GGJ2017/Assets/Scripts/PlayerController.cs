@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour {
             curPenaltyTimer -= Time.deltaTime;
             if (curPenaltyTimer <= 0)
             {
+                GameObject.Find("MiddleIsland").GetComponent<MiddleIslandBehaviour>().playerRespawnFlash(playerID);
                 curPenaltyTimer = penaltyTimer;
                 penalty = false;
             }
@@ -95,7 +96,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (h.collider.gameObject.tag == "Island" && maxDist > h.distance)
             {
-                Debug.Log(h.collider.gameObject.tag);
                 hit = h;
                 maxDist = h.distance;
             }
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour {
         if (len <= jumpDist)
         {
             drawLine(ray, len);
-            if (Input.GetButtonDown(playerID.ToString() + ":Fire1") && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() == 1 && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() == 2)
+            if (Input.GetButtonDown(playerID.ToString() + ":Fire1") && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() != 1 && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() != 2)
             {
                 switchToIsland(hit.collider.gameObject);
             }
