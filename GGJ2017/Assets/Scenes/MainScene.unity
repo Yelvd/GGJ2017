@@ -182,10 +182,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f998ecc57a80545b15d1439c1bb95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  islandPrefab: {fileID: 1254804623137898, guid: 7011b260df8b220498031d60e927e617,
+  islandPrefab: {fileID: 1103781356345238, guid: 6798989d1d0fa2a4fbbd659ffaae089c,
     type: 2}
+  setTimer: 1
   islandCounter: 0
-  maxIslands: 0
+  maxIslands: 30
 --- !u!1 &790411973
 GameObject:
   m_ObjectHideFlags: 0

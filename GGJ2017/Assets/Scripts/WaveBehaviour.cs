@@ -8,6 +8,10 @@ public class WaveBehaviour : MonoBehaviour {
     public float speed = 0.01f;
     public float maxScale = 1f;
     private float maxSize;
+    [SerializeField]
+    private float wavePower;
+    [SerializeField]
+    private List<GameObject> islands;
 
 	void Start () {
         this.transform.localScale = Vector3.zero;
@@ -31,6 +35,28 @@ public class WaveBehaviour : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-
+    private Vector2 getWavePower(GameObject other)
+    {
+        Vector3 waveHitDirection = other.transform.position - this.transform.position;
+        waveHitDirection.Normalize();
+        if (wavePower > 20)
+        {
+            float currentPercentTraffeled = (maxSize / 100) * this.GetComponent<SpriteRenderer>().bounds.size.x;
+            wavePower -= currentPercentTraffeled;            
+        }
+        else
+        {
+            wavePower = 20;
+        }
+        Vector2 endResult = new Vector2(waveHitDirection.x *= wavePower, waveHitDirection.y *= wavePower);
+    return endResult;
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Island")
+        {
+            other.gameObject.GetComponent<IslandBehavior>().MoveIsland(getWavePower(other.gameObject));
+        }
+    }
     
 }

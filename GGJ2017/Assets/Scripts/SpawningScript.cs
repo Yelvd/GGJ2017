@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawningScript : MonoBehaviour {
 
     public GameObject islandPrefab;
-
+    [SerializeField]
     private float setTimer;
     private bool timerSet;
     float currentTime;
@@ -16,7 +16,7 @@ public class SpawningScript : MonoBehaviour {
     private int maxIslands;
 	// Use this for initialization
 	void Start () {
-        setTimer = 2;        
+        
 
 	}
 	
