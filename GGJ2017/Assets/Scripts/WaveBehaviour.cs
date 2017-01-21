@@ -39,8 +39,6 @@ public class WaveBehaviour : MonoBehaviour {
 
         float currentPercentTraffeled = (maxSize / 100) * this.GetComponent<SpriteRenderer>().bounds.size.x;
         float wavePower = startWavePower - (startWavePower - endWavePower) * currentPercentTraffeled;
-
-        Debug.Log(wavePower);
     
         Vector2 endResult = waveHitDirection * wavePower;
 
