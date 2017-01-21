@@ -34,7 +34,7 @@ public class PlayingFieldBehavior : MonoBehaviour {
         islands = new List<GameObject>(GameObject.FindGameObjectsWithTag("Island"));
         int randomIndexNumber = Random.Range(0, islands.Count);
         finishIsland = islands[randomIndexNumber];
-        if (finishIsland.GetComponent<IslandBehavior>().getStatus() == 1)
+        if (finishIsland.GetComponent<IslandBehavior>().getStatus() == 1 || finishIsland.GetComponent<IslandBehavior>().getStatus() == 2)
         {
             int newRandomIndexNumber = Random.Range(0, islands.Count);
             while (newRandomIndexNumber == randomIndexNumber)
