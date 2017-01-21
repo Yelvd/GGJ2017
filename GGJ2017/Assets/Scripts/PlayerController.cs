@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        pos.GetComponent<IslandBehavior>().setStatus(1);
+        //pos.GetComponent<IslandBehavior>().setStatus(1);
         line = setupLine();
+        pos = GameObject.Find("MiddleIsland");
 	}
 
  
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour {
     void drawLine(Vector3 ray, float size = 0)
     {
         if (size == 0) { size = jumpDist; }
-        lr.SetPosition(0, pos.transform.position  + new Vector3(0,0,-1));
+        lr.SetPosition(0, pos.transform.position + new Vector3(0, 0, -1));
         lr.SetPosition(1, pos.transform.position + (ray * size) + new Vector3(0, 0, -1));
     }
 
@@ -50,14 +51,14 @@ public class PlayerController : MonoBehaviour {
         ray.Normalize();
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos.transform.position, ray);
         drawLine(ray);
-        Debug.Log(ray);
 
         //bool check = false;
         foreach (var hit in hits)
-        {         
-            if (hit.collider.gameObject.tag == "Island")
-            {
-                drawLine(ray, (hit.collider.transform.position - pos.transform.position).magnitude);
+        {
+            float len = (hit.collider.transform.position - pos.transform.position).magnitude;
+            if (hit.collider.gameObject.tag == "Island" && len <= jumpDist)
+            {   
+                drawLine(ray, len);
                 switchToIsland(hit.collider.gameObject);
             }
         }
@@ -67,7 +68,8 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButton("Fire1"))
         {
-            pos.GetComponent<IslandBehavior>().setStatus(0);
+            if(pos.gameObject.tag == "Island")
+                pos.GetComponent<IslandBehavior>().setStatus(0);
             pos = island;
             pos.GetComponent<IslandBehavior>().setStatus(1);
         }
