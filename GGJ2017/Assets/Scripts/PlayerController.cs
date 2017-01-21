@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour {
         float maxDist = float.PositiveInfinity;
         foreach (var h in hits)
         {
-
             if (h.collider.gameObject.tag == "Island" && maxDist > h.distance)
             {
                 Debug.Log(h.collider.gameObject.tag);
@@ -130,18 +129,15 @@ public class PlayerController : MonoBehaviour {
 
     void switchToIsland(GameObject island)
     {
-        if (Input.GetButton("Fire1"))
+        if(pos.gameObject.tag == "Island")
+            pos.GetComponent<IslandBehavior>().setStatus(0);
+        if (island.GetComponent<IslandBehavior>().getStatus() == 5)
         {
-            if(pos.gameObject.tag == "Island")
-                pos.GetComponent<IslandBehavior>().setStatus(0);
-            if (island.GetComponent<IslandBehavior>().getStatus() == 5)
-            {
-                GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
-                GameObject.Find("Score").GetComponent<ScoreCounter>().AddPoint();
-            }
-            pos = island;
-            pos.GetComponent<IslandBehavior>().setStatus(playerID);
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
+            GameObject.Find("Score").GetComponent<ScoreCounter>().AddPoint(playerID);
         }
+        pos = island;
+        pos.GetComponent<IslandBehavior>().setStatus(playerID);
     }
 
     public void ResetPlayer()
