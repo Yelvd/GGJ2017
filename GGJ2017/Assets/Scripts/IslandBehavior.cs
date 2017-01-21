@@ -25,8 +25,9 @@ public class IslandBehavior : MonoBehaviour {
 
     public void MoveIsland(Vector2 directionSpeed)
     {
-        rbd.AddForce(directionSpeed/2);
+        rbd.AddForce(directionSpeed);
     }
+
     public void DestroyIsland()
     {
         Destroy(this.gameObject);

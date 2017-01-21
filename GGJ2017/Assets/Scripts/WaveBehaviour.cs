@@ -8,14 +8,11 @@ public class WaveBehaviour : MonoBehaviour {
     public float speed = 0.01f;
     public float maxScale = 1f;
     private float maxSize;
-    [SerializeField]
-    private float wavePower;
-    [SerializeField]
-    private List<GameObject> islands;
+    private float startWavePower;
+    private float endWavePower;
 
 	void Start () {
         this.transform.localScale = Vector3.zero;
-        maxSize = GameObject.Find("PlayingField").GetComponent<SpriteRenderer>().bounds.size.x * maxScale;
     }
 	
 	// Update is called once per frame
@@ -39,24 +36,32 @@ public class WaveBehaviour : MonoBehaviour {
     {
         Vector3 waveHitDirection = other.transform.position - this.transform.position;
         waveHitDirection.Normalize();
-        if (wavePower > 20)
-        {
-            float currentPercentTraffeled = (maxSize / 100) * this.GetComponent<SpriteRenderer>().bounds.size.x;
-            wavePower -= currentPercentTraffeled;            
-        }
-        else
-        {
-            wavePower = 20;
-        }
-        Vector2 endResult = new Vector2(waveHitDirection.x *= wavePower, waveHitDirection.y *= wavePower);
+
+        float currentPercentTraffeled = (maxSize / 100) * this.GetComponent<SpriteRenderer>().bounds.size.x;
+        float wavePower = startWavePower - (startWavePower - endWavePower) * currentPercentTraffeled;
+
+        Debug.Log(wavePower);
+    
+        Vector2 endResult = waveHitDirection * wavePower;
+
     return endResult;
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Island")
         {
             other.gameObject.GetComponent<IslandBehavior>().MoveIsland(getWavePower(other.gameObject));
         }
+    }
+    public void setupWave(Vector3 pos, float startPower, float endPower, float scale, float sp = 0.01f)
+    {
+        this.transform.position = pos;
+        startWavePower = startPower;
+        endWavePower = endPower;
+        maxScale = scale;
+        speed = sp;
+        maxSize = GameObject.Find("PlayingField").GetComponent<SpriteRenderer>().bounds.size.x * maxScale;
     }
     
 }
