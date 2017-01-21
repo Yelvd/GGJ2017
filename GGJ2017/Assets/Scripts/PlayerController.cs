@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public float pullPower;
     public GameObject wave;
     public GameObject pos;
     public float cooldown;
-    private float timeLeft = 0;
+    public float timeLeftWave = 0;
     [SerializeField]
     private float jumpDist = 1f;
     private GameObject line;
@@ -80,12 +81,11 @@ public class PlayerController : MonoBehaviour {
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos.transform.position, ray);
         drawLine(ray);
 
-        if (Input.GetAxis(playerID.ToString() + ":Fire2") == 1)
-        {
+        timeLeftWave -= Time.deltaTime;
+        if (Input.GetButtonDown(playerID.ToString() + ":Fire2"))
             createWave();
-        }
 
-        if (Input.GetAxis(playerID.ToString() + ":Fire3") == -1)
+        if (Input.GetButtonDown(playerID.ToString() + ":Fire3"))
             pullIsland();
 
         if (hits.Length <= 0) return;
@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (h.collider.gameObject.tag == "Island" && maxDist > h.distance)
             {
-                Debug.Log(h.collider.gameObject.tag);
                 hit = h;
                 maxDist = h.distance;
             }
@@ -114,18 +113,41 @@ public class PlayerController : MonoBehaviour {
 
     void createWave()
     {
-        timeLeft -= Time.deltaTime;
         if (pos.gameObject.tag != "Island") return;
         if (myWave != null) return;
-        if (timeLeft > 0) return;
+        if (timeLeftWave > 0) return;
 
         myWave = Instantiate(wave);
         myWave.GetComponent<WaveBehaviour>().setupWave(pos.transform.position, maxWavePower, minWavePower, scale, true);
-        timeLeft = cooldown;
+        timeLeftWave = cooldown;
     }
 
     void pullIsland()
-    { }
+    {
+        if (pos.gameObject.tag != "Island") return;
+        GameObject[] islands = GameObject.FindGameObjectsWithTag("Island");
+        float dist = float.PositiveInfinity;
+        GameObject island = null;
+        foreach(GameObject land in islands)
+        {
+            float d = Mathf.Abs((land.transform.position - pos.transform.position).magnitude);
+            if(d < dist & d != 0)
+            {
+                dist = d;
+                island = land;
+            }
+        }
+
+        if (island == null) return;
+
+        Vector2 vec = (island.transform.position - pos.transform.position);
+        vec.Normalize();
+        Debug.Log(pos.transform.position);
+        Debug.Log(island.transform.position);
+        Debug.Log(pos.transform.position - island.transform.position);
+        pos.GetComponent<Rigidbody2D>().AddForce(vec * pullPower);
+        island.GetComponent<Rigidbody2D>().AddForce(-vec * pullPower);
+    }
 
     void switchToIsland(GameObject island)
     {
