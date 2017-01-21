@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour {
                 pos.GetComponent<IslandBehavior>().setStatus(0);
             if (island.GetComponent<IslandBehavior>().getStatus() == 5)
             {
-                //Ghyma's stukkie
                 GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
+                GameObject.Find("Score").GetComponent<ScoreCounter>().AddPoint();
             }
             pos = island;
             pos.GetComponent<IslandBehavior>().setStatus(1);
