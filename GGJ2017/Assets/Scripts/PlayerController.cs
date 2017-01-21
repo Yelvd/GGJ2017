@@ -83,10 +83,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButton("Fire1"))
         {
-            if(pos.gameObject.tag == "Island")
+            if (pos.gameObject.tag == "Island")
+            {
                 pos.GetComponent<IslandBehavior>().setStatus(0);
-            pos = island;
-            pos.GetComponent<IslandBehavior>().setStatus(1);
+                pos = island;
+                pos.GetComponent<IslandBehavior>().setStatus(1);
+                GameObject.Find("Score").GetComponent<ScoreCounter>().AddPoint();
+            }
         }
     }
     public void ResetPlayer()
