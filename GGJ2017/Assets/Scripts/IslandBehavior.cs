@@ -8,7 +8,8 @@ public class IslandBehavior : MonoBehaviour {
     private bool hit;
 
     public Material neutral;
-    public Material p1;
+    public Material p1, p2, p3, p4;
+    public Material finish;
 
     [SerializeField]
     private int status = 0;
@@ -16,11 +17,12 @@ public class IslandBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rbd = GetComponent<Rigidbody2D>();
+        ColorPicker();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        ColorPicker();
+        
 	}
 
     public void MoveIsland(Vector2 directionSpeed)
@@ -32,6 +34,8 @@ public class IslandBehavior : MonoBehaviour {
     {
         if (getStatus() == 1)
             GameObject.Find("Player").GetComponent<PlayerController>().ResetPlayer();
+        else if (getStatus() == 5)
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
         Destroy(this.gameObject);
 
     }
@@ -47,9 +51,18 @@ public class IslandBehavior : MonoBehaviour {
             case 1:
                 this.gameObject.GetComponent<Renderer>().material = p1;
                 break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                this.gameObject.GetComponent<Renderer>().material = finish;
+                break;
         }
     }
 
-    public void setStatus(int i) { status = i; }
+    public void setStatus(int i) { status = i; ColorPicker(); }
     public int getStatus() { return status; }
 }
