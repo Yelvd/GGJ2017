@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curPointTimer: 10
-  pointTimerSet: 10
+  pointTimerSet: 5
 --- !u!1 &876277214
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +562,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScorePoints: 0
-  scoretext: {fileID: 1881355048}
+  ScorePoints2: 0
+  scorep1: {fileID: 1881355048}
+  scorep2: {fileID: 1277638603}
 --- !u!4 &1488308263
 Transform:
   m_ObjectHideFlags: 0
