@@ -10,6 +10,11 @@ public class PlayerController : MonoBehaviour {
     private GameObject line;
     private LineRenderer lr;
 
+    private bool penalty;
+    [SerializeField]
+    private float penaltyTimer;
+    [SerializeField]
+    private float curPenaltyTimer;
 	// Use this for initialization
 	void Start () {
         //pos.GetComponent<IslandBehavior>().setStatus(1);
@@ -21,6 +26,16 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (penalty)
+        {
+            curPenaltyTimer -= Time.deltaTime;
+            if(curPenaltyTimer <= 0)
+            {
+                curPenaltyTimer = penaltyTimer;
+                penalty = false;
+            }
+            return;
+        }
         handleInput();
 	}
 
@@ -73,5 +88,11 @@ public class PlayerController : MonoBehaviour {
             pos = island;
             pos.GetComponent<IslandBehavior>().setStatus(1);
         }
+    }
+    public void ResetPlayer()
+    {
+        Debug.Log("Reset");
+        pos = GameObject.FindGameObjectWithTag("Respawn");
+        penalty = true;
     }
 }
