@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject pos;
     public float cooldown;
     private float timeLeft = 0;
-    [SerializeField] 
+    [SerializeField]
     private float jumpDist = 1f;
     private GameObject line;
     private LineRenderer lr;
@@ -21,35 +21,41 @@ public class PlayerController : MonoBehaviour {
     private float penaltyTimer;
     [SerializeField]
     private float curPenaltyTimer;
+    private bool fireDown = false;
+    public int playerID = 1;
+    public Color clr = Color.red;
 
-	// Use this for initialization
-	void Start ()
+
+    // Use this for initialization
+    void Start()
     {
         line = setupLine();
         pos = GameObject.Find("MiddleIsland");
-	}
+    }
 
- 
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update() {
         if (penalty)
         {
+            drawLine(Vector3.zero);
             curPenaltyTimer -= Time.deltaTime;
-            if(curPenaltyTimer <= 0)
+            if (curPenaltyTimer <= 0)
             {
                 curPenaltyTimer = penaltyTimer;
                 penalty = false;
             }
             return;
+        } else if (pos == null)
+        {
+            ResetPlayer();
         }
         handleInput();
-	}
+    }
 
     GameObject setupLine()
     {
-        Vector3 start = new Vector3(0,0,1);
-        Color color = Color.red;
+        Vector3 start = new Vector3(0, 0, 1);
+        Color color = clr;
         GameObject myLine = new GameObject();
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
@@ -69,27 +75,39 @@ public class PlayerController : MonoBehaviour {
 
     void handleInput()
     {
-        Vector2 ray = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 ray = new Vector2(Input.GetAxis(playerID.ToString() + ":Horizontal"), Input.GetAxis(playerID.ToString() + ":Vertical"));
         ray.Normalize();
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos.transform.position, ray);
         drawLine(ray);
 
-        if (Input.GetAxis("Fire2") == 1)
+        if (Input.GetAxis(playerID.ToString() + ":Fire2") == 1)
         {
             createWave();
-
         }
-        else
 
-        if (Input.GetAxis("Fire3") == -1)
+        if (Input.GetAxis(playerID.ToString() + ":Fire3") == -1)
             pullIsland();
 
-        foreach (var hit in hits)
+        if (hits.Length <= 0) return;
+        RaycastHit2D hit = hits[0];
+        float maxDist = float.PositiveInfinity;
+        foreach (var h in hits)
         {
-            float len = (hit.collider.transform.position - pos.transform.position).magnitude;
-            if (hit.collider.gameObject.tag == "Island" && len <= jumpDist)
-            {   
-                drawLine(ray, len);
+
+            if (h.collider.gameObject.tag == "Island" && maxDist > h.distance)
+            {
+                Debug.Log(h.collider.gameObject.tag);
+                hit = h;
+                maxDist = h.distance;
+            }
+        }
+        float len = maxDist;
+
+        if (len <= jumpDist)
+        {
+            drawLine(ray, len);
+            if (Input.GetButtonDown(playerID.ToString() + ":Fire1"))
+            {
                 switchToIsland(hit.collider.gameObject);
             }
         }
@@ -106,24 +124,22 @@ public class PlayerController : MonoBehaviour {
         myWave.GetComponent<WaveBehaviour>().setupWave(pos.transform.position, maxWavePower, minWavePower, scale, true);
         timeLeft = cooldown;
     }
-    
+
     void pullIsland()
-    {}
+    { }
 
     void switchToIsland(GameObject island)
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if(pos.gameObject.tag == "Island")
-                pos.GetComponent<IslandBehavior>().setStatus(0);
-            pos = island;
-            pos.GetComponent<IslandBehavior>().setStatus(1);
-        }
+        if (pos.gameObject.tag == "Island")
+            pos.GetComponent<IslandBehavior>().setStatus(0);
+        pos = island;
+        pos.GetComponent<IslandBehavior>().setStatus(playerID);
     }
+
     public void ResetPlayer()
     {
-        Debug.Log("Reset");
         pos = GameObject.FindGameObjectWithTag("Respawn");
+        drawLine(Vector3.zero);
         penalty = true;
     }
 }

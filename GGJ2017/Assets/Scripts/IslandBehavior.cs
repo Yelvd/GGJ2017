@@ -9,6 +9,7 @@ public class IslandBehavior : MonoBehaviour {
 
     public Material neutral;
     public Material p1;
+    public Material p2;
 
     [SerializeField]
     private int status = 0;
@@ -30,8 +31,10 @@ public class IslandBehavior : MonoBehaviour {
 
     public void DestroyIsland()
     {
-        if (getStatus() == 1)
-            GameObject.Find("Player").GetComponent<PlayerController>().ResetPlayer();
+        //if (getStatus() == 1)
+        //    GameObject.Find("Player").GetComponent<PlayerController>().ResetPlayer();
+        //if (getStatus() == 2)
+        //    GameObject.Find("Player (1)").GetComponent<PlayerController>().ResetPlayer();
         Destroy(this.gameObject);
 
     }
@@ -46,6 +49,9 @@ public class IslandBehavior : MonoBehaviour {
                 break;
             case 1:
                 this.gameObject.GetComponent<Renderer>().material = p1;
+                break;
+            case 2:
+                this.gameObject.GetComponent<Renderer>().material = p2;
                 break;
         }
     }

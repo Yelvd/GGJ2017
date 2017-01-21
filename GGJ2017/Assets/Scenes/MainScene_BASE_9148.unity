@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 252233133}
   m_Layer: 2
   m_Name: MiddleIsland
-  m_TagString: Respawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,52 +189,6 @@ MonoBehaviour:
   setTimer: 1
   islandCounter: 0
   maxIslands: 30
---- !u!1001 &585771858
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4228502264183946, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1406492078108584, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-      propertyPath: m_Name
-      value: Player (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &790411973
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,44 +384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fad437489f044e499ce37e82ec6722a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
   pos: {fileID: 252233129}
-  cooldown: 1
-  jumpDist: 2
-  maxWavePower: 50
-  minWavePower: 20
-  scale: 0.5
-  penaltyTimer: 5
-  curPenaltyTimer: 5
-  playerID: 1
-  clr: {r: 1, g: 0, b: 0, a: 1}
---- !u!1 &1991246178 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1406492078108584, guid: 55a40907d405983498a1623a0c2ce418,
-    type: 2}
-  m_PrefabInternal: {fileID: 585771858}
---- !u!114 &1991246179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1991246178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fad437489f044e499ce37e82ec6722a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
-  pos: {fileID: 252233129}
-  cooldown: 1
-  jumpDist: 2
-  maxWavePower: 50
-  minWavePower: 20
-  scale: 0.5
-  penaltyTimer: 5
-  curPenaltyTimer: 5
-  playerID: 2
-  clr: {r: 0, g: 1, b: 0.25517225, a: 1}
+  jumpDist: 1
 --- !u!1001 &2082297937
 Prefab:
   m_ObjectHideFlags: 0
