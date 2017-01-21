@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212052993995634094}
   - component: {fileID: 114281779573279930}
   - component: {fileID: 50466553126953540}
+  - component: {fileID: 58047648797856554}
   m_Layer: 0
   m_Name: NeutralIsland
   m_TagString: Untagged
@@ -62,6 +63,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58047648797856554
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1254804623137898}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 4
 --- !u!114 &114281779573279930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185de99f26fb0244db2d0f50c73b09bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neutral: {fileID: 2100000, guid: 97d709ca929da764c81dc27a5fdaa97c, type: 2}
+  p1: {fileID: 2100000, guid: c00655a92f9013c4b8321d91befa7c24, type: 2}
+  status: 0
 --- !u!212 &212052993995634094
 SpriteRenderer:
   m_ObjectHideFlags: 1
