@@ -718,12 +718,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fad437489f044e499ce37e82ec6722a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullPower: 25
   wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
   pos: {fileID: 252233129}
-  cooldown: 1
+  cooldown: 3
+  timeLeftWave: 0
   jumpDist: 2
-  maxWavePower: 50
-  minWavePower: 30
+  maxWavePower: 70
+  minWavePower: 10
   scale: 0.5
   penaltyTimer: 5
   curPenaltyTimer: 5
@@ -745,12 +747,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fad437489f044e499ce37e82ec6722a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullPower: 25
   wave: {fileID: 1403194174526038, guid: a57717012b2498a4fb97e8ac2a7375c5, type: 2}
   pos: {fileID: 252233129}
-  cooldown: 1
+  cooldown: 3
+  timeLeftWave: 0
   jumpDist: 2
-  maxWavePower: 50
-  minWavePower: 30
+  maxWavePower: 70
+  minWavePower: 10
   scale: 0.5
   penaltyTimer: 5
   curPenaltyTimer: 5
