@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public GameObject wave;
     public GameObject pos;
+    public float cooldown;
+    private float timeLeft = 0;
     [SerializeField] 
     private float jumpDist = 1f;
     private GameObject line;
     private LineRenderer lr;
-
+    public float maxWavePower;
+    public float minWavePower;
+    public float scale;
+    private GameObject myWave = null;
     private bool penalty;
     [SerializeField]
     private float penaltyTimer;
     [SerializeField]
     private float curPenaltyTimer;
+
 	// Use this for initialization
-	void Start () {
-        //pos.GetComponent<IslandBehavior>().setStatus(1);
+	void Start ()
+    {
         line = setupLine();
         pos = GameObject.Find("MiddleIsland");
 	}
@@ -67,7 +74,16 @@ public class PlayerController : MonoBehaviour {
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos.transform.position, ray);
         drawLine(ray);
 
-        //bool check = false;
+        if (Input.GetAxis("Fire2") == 1)
+        {
+            createWave();
+
+        }
+        else
+
+        if (Input.GetAxis("Fire3") == -1)
+            pullIsland();
+
         foreach (var hit in hits)
         {
             float len = (hit.collider.transform.position - pos.transform.position).magnitude;
@@ -79,9 +95,24 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void createWave()
+    {
+        timeLeft -= Time.deltaTime;
+        if (pos.gameObject.tag != "Island") return;
+        if (myWave != null) return;
+        if (timeLeft > 0) return;
+
+        myWave = Instantiate(wave);
+        myWave.GetComponent<WaveBehaviour>().setupWave(pos.transform.position, maxWavePower, minWavePower, scale, true);
+        timeLeft = cooldown;
+    }
+    
+    void pullIsland()
+    {}
+
     void switchToIsland(GameObject island)
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             if(pos.gameObject.tag == "Island")
                 pos.GetComponent<IslandBehavior>().setStatus(0);
