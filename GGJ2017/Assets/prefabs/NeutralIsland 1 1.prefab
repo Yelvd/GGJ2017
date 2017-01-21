@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1103781356345238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.75, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 1}
+  m_LocalScale: {x: 0.025, y: 0.025, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,7 +90,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neutral: {fileID: 2100000, guid: 97d709ca929da764c81dc27a5fdaa97c, type: 2}
   p1: {fileID: 2100000, guid: c00655a92f9013c4b8321d91befa7c24, type: 2}
-  p2: {fileID: 2100000, guid: fd29c391e3ebf4e4a93bc943657dd299, type: 2}
+  p2: {fileID: 0}
+  p3: {fileID: 0}
+  p4: {fileID: 0}
+  finish: {fileID: 2100000, guid: 7295bbbb00b3d5044868d0f915c70380, type: 2}
   status: 0
 --- !u!212 &212296285397339740
 SpriteRenderer:
