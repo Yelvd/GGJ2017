@@ -177,6 +177,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f379580ab5acc9f438655e69d9f11d29, type: 2}
   - {fileID: 2100000, guid: c00655a92f9013c4b8321d91befa7c24, type: 2}
   - {fileID: 2100000, guid: fd29c391e3ebf4e4a93bc943657dd299, type: 2}
+  curTimer: 0
+  setTimer: 0.5
 --- !u!114 &252233133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +700,10 @@ Prefab:
     - target: {fileID: 1406492078108584, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
       propertyPath: m_Name
       value: Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406492078108584, guid: 55a40907d405983498a1623a0c2ce418, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55a40907d405983498a1623a0c2ce418, type: 2}

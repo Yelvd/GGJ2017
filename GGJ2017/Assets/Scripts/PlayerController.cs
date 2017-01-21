@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float curPenaltyTimer;
     private bool fireDown = false;
-    public int playerID = 1;
+    public int playerID = 0;
     public Color clr = Color.red;
 
 
