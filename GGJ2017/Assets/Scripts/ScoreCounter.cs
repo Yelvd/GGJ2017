@@ -23,6 +23,14 @@ public class ScoreCounter : MonoBehaviour {
             ScorePoints2++;
         OnHud();
     }
+    public void TakePoint(int player)
+    {
+        if (player == 1)
+            ScorePoints--;
+        else
+            ScorePoints2--;
+        OnHud();
+    }
     void OnHud()
     {
         scorep1.text = "Points = " + ScorePoints.ToString();

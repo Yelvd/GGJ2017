@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour {
 
     public void ResetPlayer()
     {
+        GameObject.Find("Score").GetComponent<ScoreCounter>().TakePoint(playerID);
         pos = GameObject.FindGameObjectWithTag("Respawn");
         drawLine(Vector3.zero);
         penalty = true;
