@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class PlayingFieldBehavior : MonoBehaviour {
     [SerializeField]
@@ -9,9 +11,8 @@ public class PlayingFieldBehavior : MonoBehaviour {
     public bool pointTimerActive;
     private List<GameObject> islands;
     private GameObject finishIsland;
-    public Material p1;
-    public Material p2;
     public bool gameStarted = false;
+    public Text text1, text2;
 
     // Use this for initialization
     void Start () {
@@ -61,11 +62,16 @@ public class PlayingFieldBehavior : MonoBehaviour {
 
     public void victory(int i)
     {
-        Material win;
-        if (i == 1)
-            win = p1;
+        if (i == 1) {
+            text2.text = "Red Wins";
+            text2.color = Color.red;
+        }
         else
-            win = p2;
+        {
+            text2.text = "Green Wins";
+            text2.color = Color.green;
+        }
+
 
         foreach (GameObject island in GameObject.FindGameObjectsWithTag("Island"))
         {
@@ -73,6 +79,11 @@ public class PlayingFieldBehavior : MonoBehaviour {
         }
         GameObject.Find("MiddleIsland").GetComponent<SpawningScript>().maxIslands = -1;
         pointTimerActive = false;
+        text1.enabled = true;
+        text2.enabled = true;
+       
+        
+       
     }
 
     public void pointIslandReset()
@@ -84,16 +95,12 @@ public class PlayingFieldBehavior : MonoBehaviour {
     {
         if (GameObject.Find("Score").GetComponent<ScoreCounter>().ScorePoints == 0 &&
             GameObject.Find("Score").GetComponent<ScoreCounter>().ScorePoints2 == 0)
-            return;
+            Application.Quit();
         else
-            SceneManager.LoadScene("MainScene");
-    }
-    public void OnGUI()
-    {
-        if (true)
         {
-            Rect r = new Rect(new Vector2(Screen.width / 2 + Screen.height / 2 + Screen.width / 8, Screen.height / 4), new Vector2(Screen.height / 2, Screen.width / 4));
-            GUI.Label(new Rect(), "Both press Y to restart \n Left bumber to create wave \n Right bumber pull to closest island \n Left stick and A to move");
+            GameObject.Find("Player").GetComponent<PlayerController>().reset();
+            SceneManager.LoadScene("MainScene");
         }
+           
     }
 }

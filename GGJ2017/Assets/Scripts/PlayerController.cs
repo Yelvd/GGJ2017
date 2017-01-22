@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
     public float pullPower;
+    public Material mat;
     public GameObject wave;
     public GameObject pos;
+    public GameObject linePreFab;
     public float cooldownWave = 3;
     private float timeLeftWave = 0;
     public float cooldownPull = 2;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     public int playerID = 0;
     public Color clr = Color.red;
     public static bool notJumped = true;
+    public Text text1, text2;
 
 
     // Use this for initialization
@@ -61,13 +65,15 @@ public class PlayerController : MonoBehaviour {
     {
         Vector3 start = new Vector3(0, 0, 1);
         Color color = clr;
-        GameObject myLine = new GameObject();
+        GameObject myLine = Instantiate(linePreFab);
         myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
         lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.05f, 0.05f);
+        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.material = mat;
+        //lr.startColor = clr;
+        //lr.endColor = clr;
+        //lr.startWidth = 0.05f;
+        //lr.endWidth = 0.05f;
         return myLine;
     }
 
@@ -149,9 +155,6 @@ public class PlayerController : MonoBehaviour {
 
         Vector2 vec = (island.transform.position - pos.transform.position);
         vec.Normalize();
-        Debug.Log(pos.transform.position);
-        Debug.Log(island.transform.position);
-        Debug.Log(pos.transform.position - island.transform.position);
         pos.GetComponent<Rigidbody2D>().AddForce(vec * pullPower);
         island.GetComponent<Rigidbody2D>().AddForce(-vec * pullPower);
         timeLeftPull = cooldownWave;
@@ -165,8 +168,12 @@ public class PlayerController : MonoBehaviour {
         {
             GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointTimerActive = true;
             GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().gameStarted = true;
+            text1.enabled = false;
+            text2.text = "Both press Y to restart";
+            text2.enabled = false;
             notJumped = false;
         }
+        
             
         if (island.GetComponent<IslandBehavior>().getStatus() == 5)
         {
@@ -183,5 +190,10 @@ public class PlayerController : MonoBehaviour {
         pos = GameObject.FindGameObjectWithTag("Respawn");
         drawLine(Vector3.zero);
         penalty = true;
+    }
+
+    public void reset()
+    {
+        notJumped = true;
     }
 }
