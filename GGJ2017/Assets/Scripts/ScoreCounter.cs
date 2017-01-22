@@ -18,9 +18,9 @@ public class ScoreCounter : MonoBehaviour {
     public void AddPoint(int player)
     {
         if (player == 1)
-            ScorePoints++;
+            ScorePoints += 2;
         else
-            ScorePoints2++;
+            ScorePoints2 += 2;
         OnHud();
     }
     public void TakePoint(int player)
