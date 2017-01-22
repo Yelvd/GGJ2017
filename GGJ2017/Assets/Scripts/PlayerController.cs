@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+    public float pullPower;
+    public Material mat;
     public GameObject wave;
     public GameObject pos;
-    public float cooldown;
-    private float timeLeft = 0;
+    public GameObject linePreFab;
+    public float cooldownWave = 3;
+    private float timeLeftWave = 0;
+    public float cooldownPull = 2;
+    private float timeLeftPull = 0;
     [SerializeField]
     private float jumpDist = 1f;
     private GameObject line;
@@ -22,8 +28,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float curPenaltyTimer;
     private bool fireDown = false;
-    public int playerID = 1;
+    public int playerID = 0;
     public Color clr = Color.red;
+    public static bool notJumped = true;
+    public Text text1, text2;
 
 
     // Use this for initialization
@@ -41,6 +49,7 @@ public class PlayerController : MonoBehaviour {
             curPenaltyTimer -= Time.deltaTime;
             if (curPenaltyTimer <= 0)
             {
+                GameObject.Find("MiddleIsland").GetComponent<MiddleIslandBehaviour>().playerRespawnFlash(playerID);
                 curPenaltyTimer = penaltyTimer;
                 penalty = false;
             }
@@ -56,13 +65,15 @@ public class PlayerController : MonoBehaviour {
     {
         Vector3 start = new Vector3(0, 0, 1);
         Color color = clr;
-        GameObject myLine = new GameObject();
+        GameObject myLine = Instantiate(linePreFab);
         myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
         lr = myLine.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        lr.SetColors(color, color);
-        lr.SetWidth(0.05f, 0.05f);
+        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        lr.material = mat;
+        //lr.startColor = clr;
+        //lr.endColor = clr;
+        //lr.startWidth = 0.05f;
+        //lr.endWidth = 0.05f;
         return myLine;
     }
 
@@ -80,12 +91,13 @@ public class PlayerController : MonoBehaviour {
         RaycastHit2D[] hits = Physics2D.RaycastAll(pos.transform.position, ray);
         drawLine(ray);
 
-        if (Input.GetAxis(playerID.ToString() + ":Fire2") == 1)
-        {
-            createWave();
-        }
+        timeLeftWave -= Time.deltaTime;
+        timeLeftPull -= Time.deltaTime;
 
-        if (Input.GetAxis(playerID.ToString() + ":Fire3") == -1)
+        if (Input.GetButtonDown(playerID.ToString() + ":Fire2"))
+            createWave();
+
+        if (Input.GetButtonDown(playerID.ToString() + ":Fire3"))
             pullIsland();
 
         if (hits.Length <= 0) return;
@@ -95,7 +107,6 @@ public class PlayerController : MonoBehaviour {
         {
             if (h.collider.gameObject.tag == "Island" && maxDist > h.distance)
             {
-                Debug.Log(h.collider.gameObject.tag);
                 hit = h;
                 maxDist = h.distance;
             }
@@ -105,7 +116,7 @@ public class PlayerController : MonoBehaviour {
         if (len <= jumpDist)
         {
             drawLine(ray, len);
-            if (Input.GetButtonDown(playerID.ToString() + ":Fire1"))
+            if (Input.GetButtonDown(playerID.ToString() + ":Fire1") && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() != 1 && hit.collider.gameObject.GetComponent<IslandBehavior>().getStatus() != 2)
             {
                 switchToIsland(hit.collider.gameObject);
             }
@@ -114,23 +125,56 @@ public class PlayerController : MonoBehaviour {
 
     void createWave()
     {
-        timeLeft -= Time.deltaTime;
         if (pos.gameObject.tag != "Island") return;
         if (myWave != null) return;
-        if (timeLeft > 0) return;
+        if (timeLeftWave > 0) return;
 
         myWave = Instantiate(wave);
         myWave.GetComponent<WaveBehaviour>().setupWave(pos.transform.position, maxWavePower, minWavePower, scale, true);
-        timeLeft = cooldown;
+        timeLeftWave = cooldownWave;
     }
 
     void pullIsland()
-    { }
+    {
+        if (timeLeftPull > 0) return;
+        if (pos.gameObject.tag != "Island") return;
+        GameObject[] islands = GameObject.FindGameObjectsWithTag("Island");
+        float dist = float.PositiveInfinity;
+        GameObject island = null;
+        foreach(GameObject land in islands)
+        {
+            float d = Mathf.Abs((land.transform.position - pos.transform.position).magnitude);
+            if(d < dist & d != 0)
+            {
+                dist = d;
+                island = land;
+            }
+        }
+
+        if (island == null) return;
+
+        Vector2 vec = (island.transform.position - pos.transform.position);
+        vec.Normalize();
+        pos.GetComponent<Rigidbody2D>().AddForce(vec * pullPower);
+        island.GetComponent<Rigidbody2D>().AddForce(-vec * pullPower);
+        timeLeftPull = cooldownWave;
+    }
 
     void switchToIsland(GameObject island)
     {
         if(pos.gameObject.tag == "Island")
             pos.GetComponent<IslandBehavior>().setStatus(0);
+        else if (notJumped)
+        {
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointTimerActive = true;
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().gameStarted = true;
+            text1.enabled = false;
+            text2.text = "Both press Y to restart";
+            text2.enabled = false;
+            notJumped = false;
+        }
+        
+            
         if (island.GetComponent<IslandBehavior>().getStatus() == 5)
         {
             GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
@@ -142,8 +186,14 @@ public class PlayerController : MonoBehaviour {
 
     public void ResetPlayer()
     {
+        GameObject.Find("Score").GetComponent<ScoreCounter>().TakePoint(playerID);
         pos = GameObject.FindGameObjectWithTag("Respawn");
         drawLine(Vector3.zero);
         penalty = true;
+    }
+
+    public void reset()
+    {
+        notJumped = true;
     }
 }

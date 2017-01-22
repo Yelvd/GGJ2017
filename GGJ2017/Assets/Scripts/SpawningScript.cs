@@ -12,8 +12,7 @@ public class SpawningScript : MonoBehaviour {
     [SerializeField]
     private int islandCounter;
     
-    [SerializeField]
-    private int maxIslands;
+    public int maxIslands;
 	// Use this for initialization
 	void Start () {
         
@@ -27,6 +26,7 @@ public class SpawningScript : MonoBehaviour {
             Timer();
         }
 	}
+
     private void Timer()
     {
         currentTime -= Time.deltaTime;
@@ -37,11 +37,13 @@ public class SpawningScript : MonoBehaviour {
             currentTime = SetCurrentTime();
         }
     }
+
     private float SetCurrentTime()
     {
         float currentTime = this.setTimer;
         return currentTime;
     }
+
     private Vector2 IslandPositionSetter(Vector3 mainIslandPosition, float mainIslandRadius, Vector3 newIslandPosition)
     {
         mainIslandPosition = this.transform.position;
@@ -50,10 +52,12 @@ public class SpawningScript : MonoBehaviour {
         newIslandPosition = new Vector3((this.GetComponent<SpriteRenderer>().bounds.size.x/2) * angle.x, (this.GetComponent<SpriteRenderer>().bounds.size.y/2) * angle.y, 0);
         return newIslandPosition;
     }
+
     public void addIsland()
     {
         islandCounter++;
     }
+
     public void deleteIsland()
     {
         islandCounter--;
