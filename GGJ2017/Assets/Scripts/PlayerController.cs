@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour {
     public float pullPower;
     public GameObject wave;
     public GameObject pos;
-    public float cooldown;
-    public float timeLeftWave = 0;
+    public float cooldownWave = 3;
+    private float timeLeftWave = 0;
+    public float cooldownPull = 2;
+    private float timeLeftPull = 0;
     [SerializeField]
     private float jumpDist = 1f;
     private GameObject line;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour {
     private bool fireDown = false;
     public int playerID = 0;
     public Color clr = Color.red;
+    public static bool notJumped = true;
 
 
     // Use this for initialization
@@ -83,6 +86,8 @@ public class PlayerController : MonoBehaviour {
         drawLine(ray);
 
         timeLeftWave -= Time.deltaTime;
+        timeLeftPull -= Time.deltaTime;
+
         if (Input.GetButtonDown(playerID.ToString() + ":Fire2"))
             createWave();
 
@@ -120,11 +125,12 @@ public class PlayerController : MonoBehaviour {
 
         myWave = Instantiate(wave);
         myWave.GetComponent<WaveBehaviour>().setupWave(pos.transform.position, maxWavePower, minWavePower, scale, true);
-        timeLeftWave = cooldown;
+        timeLeftWave = cooldownWave;
     }
 
     void pullIsland()
     {
+        if (timeLeftPull > 0) return;
         if (pos.gameObject.tag != "Island") return;
         GameObject[] islands = GameObject.FindGameObjectsWithTag("Island");
         float dist = float.PositiveInfinity;
@@ -148,12 +154,20 @@ public class PlayerController : MonoBehaviour {
         Debug.Log(pos.transform.position - island.transform.position);
         pos.GetComponent<Rigidbody2D>().AddForce(vec * pullPower);
         island.GetComponent<Rigidbody2D>().AddForce(-vec * pullPower);
+        timeLeftPull = cooldownWave;
     }
 
     void switchToIsland(GameObject island)
     {
         if(pos.gameObject.tag == "Island")
             pos.GetComponent<IslandBehavior>().setStatus(0);
+        else if (notJumped)
+        {
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointTimerActive = true;
+            GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().gameStarted = true;
+            notJumped = false;
+        }
+            
         if (island.GetComponent<IslandBehavior>().getStatus() == 5)
         {
             GameObject.Find("PlayingField").GetComponent<PlayingFieldBehavior>().pointIslandReset();
