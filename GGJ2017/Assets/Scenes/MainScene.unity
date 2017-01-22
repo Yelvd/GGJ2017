@@ -762,8 +762,8 @@ MonoBehaviour:
   maxWavePower: 70
   minWavePower: 10
   scale: 0.5
-  penaltyTimer: 5
-  curPenaltyTimer: 5
+  penaltyTimer: 1
+  curPenaltyTimer: 1
   playerID: 1
   clr: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &2082297937
